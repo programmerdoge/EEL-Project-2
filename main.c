@@ -42,7 +42,7 @@ int main(void)
     const char *suit[] = {"Clubs", "Diamonds", "Hearts", "Spades"};
 
     //integer array for face values
-    int faceValue[] = { 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 10 , 11 , 12 , 13, 14};
+    int faceValue[] = { 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 10 , 11 , 12, 13};
     //integer array for suit values
     int suitValue[] = { 1 , 2 , 3 , 4};
 
