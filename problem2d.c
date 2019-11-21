@@ -175,10 +175,10 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
 
              for(o = 0; o < HAND; o++) //loop through aDeck and assign to aHand6
             {
-                aHand1[o].face = aDeck[i].face;
-                aHand1[o].suit = aDeck[i].suit;
-                aHand1[o].value = aDeck[i].value;
-                handValue6 += aHand6[j].value;
+                aHand6[o].face = aDeck[i].face;
+                aHand6[o].suit = aDeck[i].suit;
+                aHand6[o].value = aDeck[i].value;
+                handValue6 += aHand6[o].value;
                 i++;
             }
 
