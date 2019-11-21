@@ -20,7 +20,7 @@ typedef struct card Card;  //new typename for struct card
 //prototypes
 void fillDeck( Card * const aDeck, const char *aFace[], const char *aSuit[], int fValue[], int sValue[]);
 void shuffle(Card *const aDeck);
-void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card *const aHand3, Card *const aHand4, Card *const aHand5, Card *const aHand6, Card *const aHand7, Card *const aHand8);
+void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card *const aHand3, Card *const aHand4, Card *const aHand5, Card *const aHand6, Card *const aHand7, Card *const aHand8, Card *const aleftover);
 
 
     Card deck[CARDS];  //define array of Cards and for each Hand
@@ -32,6 +32,7 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
     Card hand6[HAND];
     Card hand7[HAND];
     Card hand8[HAND];
+    Card leftover[HAND];
     Card temp[HAND];   //array to hold temp variable for swapping
 
 
@@ -57,7 +58,7 @@ int main(void)
     while('\n' == newline){
 
     shuffle(deck); //shuffle the decks
-    deal(deck, hand1, hand2, hand3, hand4, hand5, hand6, hand7, hand8);  //deal the 8 hands
+    deal(deck, hand1, hand2, hand3, hand4, hand5, hand6, hand7, hand8, leftover);  //deal the 8 hands
 
     printf("\n Press \"Enter\" to play again and any other key to stop");
     newline = getchar();   //read single character from input and if \n then repeat while
@@ -99,7 +100,7 @@ void shuffle(Card *const aDeck) //random shuffle of cards
     }
 }//end shuffle function
 
-void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card *const aHand3, Card *const aHand4)  //deal cards and determine winner
+void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card *const aHand3, Card *const aHand4, Card *const aHand5, Card *const aHand6, Card *const aHand7, Card *const aHand8, Card *const aleftover)  //deal cards and determine winner
 {
 
     int handValue1 = 0;  //declare variable to hold the value of the hand
@@ -120,6 +121,7 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
     size_t o;
     size_t p;
     size_t q;
+    size_t t;
 
 
         while(i < CARDS)  //go through amount of CARDS
@@ -143,7 +145,6 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
                 handValue2 += aHand2[k].value;
                 i++;
             }
-            puts("");
 
             for(l = 0; l < HAND; l++) //loop through aDeck and assign values to aHand3
             {
@@ -153,7 +154,6 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
                 handValue3 += aHand3[l].value;
                 i++;
             }
-            puts("");
 
             for(m = 0; m < HAND; m++)  //loop through aDeck and assign values to aHand4
             {
@@ -163,7 +163,6 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
                 handValue4 += aHand4[m].value;
                 i++;
             }
-             puts("");
 
              for(n = 0; n < HAND; n++) //loop through aDeck and assign to aHand5
             {
@@ -173,7 +172,6 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
                 handValue5 += aHand5[n].value;
                 i++;
             }
-            puts(""); //output line to screen
 
              for(o = 0; o < HAND; o++) //loop through aDeck and assign to aHand6
             {
@@ -183,7 +181,6 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
                 handValue6 += aHand6[j].value;
                 i++;
             }
-            puts(""); //output line to screen
 
              for(p = 0; p < HAND; p++) //loop through aDeck and assign to aHand1
             {
@@ -193,7 +190,6 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
                 handValue7 += aHand7[p].value;
                 i++;
             }
-            puts(""); //output line to screen
 
              for(q = 0; q < HAND; q++) //loop through aDeck and assign to aHand1
             {
@@ -203,9 +199,12 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
                 handValue8 += aHand8[q].value;
                 i++;
             }
-
-            puts(""); //output line to screen
-
+            for(t=0; t<4; t++)
+            {
+                aleftover[t].face = aDeck[i].face;
+                aleftover[t].suit = aDeck[i].face;
+                i++;
+            }
 
         }
             //assign variable to identify a maxvalue of two hands at a time
@@ -229,8 +228,8 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
   }
  }  //assign variable to determine overall winner of two maxvalues
 
-    int randnum = 1+rand()%4;  //generate a random number between 1-4
-    if (randnum % 4 !=0)  // determine if randnum is divisible by 4 to give 75% chance
+    int randnum = 1+rand()%8;  //generate a random number between 1-4
+    if (randnum % 8 != 0 && randnum % 8 != 7 && randnum % 8 != 6)  // determine if randnum is divisible by 4 to give 75% chance
     {
         if( totalwinner == handValue2){                 //determine what the winning hand is then swap that value to the value of hand1
                 memcpy(temp , hand2,  sizeof(hand2));
@@ -248,6 +247,22 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
         } else if (totalwinner == handValue4){
                 memcpy(temp , hand4,  sizeof(hand4));
                 memcpy(hand4, hand1, sizeof(hand1));
+                memcpy(hand1, temp, sizeof(temp));
+        } else if (totalwinner == handValue5){
+                memcpy(temp , hand5,  sizeof(hand5));
+                memcpy(hand5, hand1, sizeof(hand1));
+                memcpy(hand1, temp, sizeof(temp));
+        } else if (totalwinner == handValue6){
+                memcpy(temp , hand6,  sizeof(hand6));
+                memcpy(hand6, hand1, sizeof(hand1));
+                memcpy(hand1, temp, sizeof(temp));
+        } else if (totalwinner == handValue7){
+                memcpy(temp , hand7,  sizeof(hand7));
+                memcpy(hand7, hand1, sizeof(hand1));
+                memcpy(hand1, temp, sizeof(temp));
+        } else if (totalwinner == handValue8){
+                memcpy(temp , hand8,  sizeof(hand8));
+                memcpy(hand8, hand1, sizeof(hand1));
                 memcpy(hand1, temp, sizeof(temp));
         } else(printf(" "));
     }
@@ -284,6 +299,41 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
                 for(m=0; m< HAND; m++)
                 {
                     printf("%5s of %-8s value: %d \n", aHand4[m].face, aHand4[m].suit, aHand4[m].value);
+                    i++;
+                }
+             puts("");
+             printf("Player T: \n");
+                for(n = 0; n< HAND; n++)
+                {
+                    printf("%5s of %-8s value: %d\n", aHand5[n].face, aHand5[n].suit, aHand5[n].value);
+                    i++;
+                }
+            puts("");
+            printf("Players U: \n");
+                for(o=0; o< HAND; o++)
+                {
+                    printf("%5s of %-8s value: %d \n", aHand6[o].face, aHand6[o].suit, aHand6[o].value);
+                    i++;
+                }
+            puts("");
+            printf("Players V: \n");
+                for(p=0; p< HAND; p++)
+                {
+                    printf("%5s of %-8s value: %d \n", aHand7[p].face, aHand7[p].suit, aHand7[p].value);
+                    i++;
+                }
+            puts("");
+            printf("Players W: \n");
+                for(q=0; q< HAND; q++)
+                {
+                    printf("%5s of %-8s value: %d \n", aHand8[q].face, aHand8[q].suit, aHand8[q].value);
+                    i++;
+                }
+            puts("");
+            printf("Cards leftover: \n");
+                for(t=0; t<4; ++t)
+                {
+                    printf("%5s of %-8s \n", aleftover[t].face, aleftover[t].suit);
                     i++;
                 }
 
