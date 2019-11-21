@@ -220,11 +220,12 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
 
  size_t s;
  int totalwinner = handValue1;
+ printf("totalwinner: %d \n", totalwinner);
 
  for(s=0; s<8; ++s){
-  if(totalwinner < values[i]){
-    totalwinner = values[i];
-
+  if(totalwinner < values[s]){
+    totalwinner = values[s];
+printf("totalwinner: %d\n", totalwinner);
   }
  }  //assign variable to determine overall winner of two maxvalues
 
@@ -237,10 +238,6 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
                 memcpy(hand1, temp, sizeof(temp));
 
         } else if (totalwinner == handValue3 ) {
-                memcpy(temp , hand3,  sizeof(hand3));
-                memcpy(hand3, hand1, sizeof(hand1));
-                memcpy(hand1, temp, sizeof(temp));
-        } else if(totalwinner == handValue3 ){
                 memcpy(temp , hand3,  sizeof(hand3));
                 memcpy(hand3, hand1, sizeof(hand1));
                 memcpy(hand1, temp, sizeof(temp));
@@ -268,7 +265,7 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
     }
             //if divisible by 4, leave hand values the same
 
-            printf("Dealing cards to players");
+            printf("Dealing cards to players\n");
 
 
         //loop through hands and print each hand
