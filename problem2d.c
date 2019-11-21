@@ -220,12 +220,10 @@ void deal(const Card *const aDeck, Card *const aHand1, Card *const aHand2, Card 
 
  size_t s;
  int totalwinner = handValue1;
- printf("totalwinner: %d \n", totalwinner);
-
+ 
  for(s=0; s<8; ++s){
   if(totalwinner < values[s]){
     totalwinner = values[s];
-printf("totalwinner: %d\n", totalwinner);
   }
  }  //assign variable to determine overall winner of two maxvalues
 
@@ -327,13 +325,7 @@ printf("totalwinner: %d\n", totalwinner);
                     i++;
                 }
             puts("");
-            printf("Cards leftover: \n");
-                for(t=0; t<4; ++t)
-                {
-                    printf("%5s of %-8s \n", aleftover[t].face, aleftover[t].suit);
-                    i++;
-                }
-
+            
 
 
     printf("Winning value: %d ", totalwinner);  //print the value of the winning hand
